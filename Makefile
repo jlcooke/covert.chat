@@ -5,7 +5,7 @@ LANGS=(fr de ru)
 default:
 	@echo "### Creating $(DATE).js and GZip'd copy ###"
 	php -r 'print preg_replace("/[0-9]{4}-[0-9]{2}-[0-9]{2}.html/s", "$(DATE).html", file_get_contents("gui.js"));' > gui.js.tmp; mv gui.js.tmp gui.js
-	cat header.js strlib.js sha256.js aes.js biginteger_trim.js dh.js gui.js | php replace_png_with_datauri.php > tmp.js
+	cat header.js ../lib/strlib.js ../lib/sha256.js ../lib/aes.js biginteger_trim.js dh.js gui.js | php replace_png_with_datauri.php > tmp.js
 	php -r 'print preg_replace("/covert_chat_20..-..-..\.zip/s", "covert_chat_$(DATE).zip", file_get_contents("tmp.js"));' > $(DATE).js; rm tmp.js
 	@echo ""
 	gzip -9c $(DATE).js > $(DATE)-gz.js
@@ -16,7 +16,7 @@ default:
 	php -r 'print preg_replace("/<script.*script>/", file_get_contents("$(DATE)_inc.html"), file_get_contents("index.html"));' > index.html.tmp; mv index.html.tmp index.html
 	@echo ""
 	@echo "### Creating Downloadable covert_chat.zip ###"
-	php -r 'print preg_replace(["/<script .*script>/","/https...s3.[0-9a-z\-]*.amazonaws.com.cdn.covert.chat./"], ["<script>\n".file_get_contents("$(DATE).js")."\n</script>",""], file_get_contents("index.html"));' > covert_chat_$(DATE).html
+	php -r '$$html= preg_replace(["/<script .*script>/","/https...s3.[0-9a-z\-]*.amazonaws.com.cdn.covert.chat./"], ["{{MAIN_JS}}",""], file_get_contents("index.html")); print str_replace("{{MAIN_JS}}","<script>\n".file_get_contents("$(DATE).js")."\n</script>",$$html);' > covert_chat_$(DATE).html
 	gzip -9c covert_chat_$(DATE).html > covert_chat_$(DATE).html.gz
 	@echo ""
 	@echo "### Updating wtf*.html files ###"
