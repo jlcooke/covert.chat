@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>covert.chat - WTF?</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="initial-scale=1.5">
+<style type="text/css">
+body, input, textarea { font-family:sans-serif; }
+</style>
+</head>
+<body>
+
+<center>
+<!-- Our logo does not matter - so we used http://linkus.flamingtext.com/ -->
+<a href="/#l=cn"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/logo.png" style="max-width:100%; width:300px;"></a><br/>
+透明的加密消息<br/>
+<a href="wtf.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/gb.png"></a>
+<a href="wtf_fr.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/fr.png"></a>
+<a href="wtf_de.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/de.png"></a>
+<a href="wtf_es.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/es.png"></a>
+<a href="wtf_kr.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/kr.png"></a>
+<a href="wtf_cn.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/cn.png"></a>
+<a href="wtf_ru.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/ru.png"></a>
+<a href="wtf_jp.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/jp.png"></a>
+<a href="wtf_sa.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/sa.png"></a>
+</center>
+
+<h2>这是什么？</h2>
+<p>这是为了响应大多数消息传递应用程序（WhatsApp，环聊等）或编译应用程序的大数据，并且在“底层”上进行的操作不受透明度限制。 更不用说外国政府潜在的政治动机了（看着你的电报）。</p>
+<p>使用强大的加密技术（256位AES）加密短消息，并在手机短信（160个字符）内工作。 保存在您的电脑或智能手机上，以便在本网站不可用时使用。</p>
+<p>没有应用程序来安装。 没有服务注册。 一切存储在您的浏览器中。 没有储存甚至没有通过服务器传输。 100％的Javascript。 所有代码均未缩小并准备好在此处查看<a href="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/2018-04-09-gz.js">此处</a>。</p>
+
+<h3>你为什么做这个？</h3>
+<p>有很多“安全消息传递”应用程序。 问题是，当你使用它们时，你无法完全审核实际运行的内容。 当他们进入应用程序商店或谷歌播放或编译时，它们会被编译，并且通常会稍微改变（应用程序分析等）。</p>
+<p>covert.chat使用SMS和JavaScript，它没有混淆，并且易于审计和审查。</p>
+<p>covert.chat不使用jQuery库（这是最优秀的，但审查安全性非常痛苦）。</p>
+<p>covert.chat不使用任何Google，Facebook，Twitter，Instagram，FourSquare，MySpace等登录或分析JavaScript可能会注入各种跟踪或更糟。</p>
+
+<h3>它能做什么</h3>
+<ol>
+<li>IV =当前时间4个字节（用于对聊天时间线进行排序，根本不是安全问题），以及从时间，鼠标移动，智能手机/平板电脑倾斜收集的12个随机字节。</li>
+<li>K = SHA256_HMAC(IV, 密码)</li>
+<li>将消息字符串转换为字节数组。</li>
+<li>CTR模式下使用256位AES加密将填充消息M加密为密文C：C = AES-256-CTR(K,IV,M)</li>
+<li>使用Base64编码的密文C将文本消息发送为＃链接（不发送到服务器）</li>
+</ol>
+
+<p>解密基本上是相反的 - 用户点击的URL不使用将链接发送到服务器的链接格式。 它使用＃链接格式，只在您的浏览器上保存加密的密文。</p>
+
+<h3>如何使用它？</h3>
+<p>你可以去<a href="https://covert.chat/#l=cn">https://covert.chat/#l=cn</a>，或者如果你有点偏执，你可以创建一个小的HTML文件，并依靠HTML的<a href="https://caniuse.com/#search=Subresource%20Integrity">Subresource Integrity</a>来加载你想要的特定版本的代码。</p>
+
+<xmp>
+<html>
+ <script src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/2018-04-09-gz.js" integrity="sha256-h40Z2gQ4eHr6kLqiPPZRcj0Jv+OLlsivDuXEI0unFnE=" crossorigin="anonymous"></script>
+</html>
+</xmp>
+
+<h3>计划的功能</h3>
+<ul>
+ <li>地址簿（存储在JavaScript localStorage中）自动完成</li>
+ <li>一次性Diffie-Hellman密钥交换选择一个非常强大的密码（并将其保存在localStorage中）</li>
+</ul>
+
+<h3>参考</h3>
+<ul>
+<li>SHA-256 (aka SHA-2) <a href="https://en.wikipedia.org/wiki/SHA-2">https://en.wikipedia.org/wiki/SHA-2</a></li>
+<li>HMAC <a href="https://en.wikipedia.org/wiki/HMAC">https://en.wikipedia.org/wiki/HMAC</a></li>
+<li>AES, AES-256: <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">https://en.wikipedia.org/wiki/Advanced_Encryption_Standard</a></li>
+<li>计数器模式 (aka. CTR 操作模式): <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#CBC">https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#CBC</a></li>
+<li>Base64编码: <a href="https://en.wikipedia.org/wiki/Base64">https://en.wikipedia.org/wiki/Base64</a></li>
+</ul>
+
+&copy; 2018
+<!-- Copyright 2018 Jean-Luc Cooke <jlcooke@certainkey.com> -->
+
+<hr/>
+<span style="font-size:10px;">
+<a href="https://www.eff.org/"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/ads/eff.png" style="max-width:100%; width:300px;"><br/>
+[<a href="mailto:jlcooke@certainkey.com?subject=My%20Advert%20On%20covert.chat">Your advert here?</a>]
+</span>
+
+</body>
+</html>

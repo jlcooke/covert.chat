@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>covert.chat - WTF?</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="initial-scale=1.5">
+<style type="text/css">
+body, input, textarea { font-family:sans-serif; }
+</style>
+</head>
+<body>
+
+<center>
+<!-- Our logo does not matter - so we used http://linkus.flamingtext.com/ -->
+<a href="/#l=es"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/logo.png" style="max-width:100%; width:300px;"></a><br/>
+Transmisión de mensajes cifrados<br/>
+<a href="wtf.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/gb.png"></a>
+<a href="wtf_fr.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/fr.png"></a>
+<a href="wtf_de.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/de.png"></a>
+<a href="wtf_es.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/es.png"></a>
+<a href="wtf_kr.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/kr.png"></a>
+<a href="wtf_cn.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/cn.png"></a>
+<a href="wtf_ru.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/ru.png"></a>
+<a href="wtf_jp.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/jp.png"></a>
+<a href="wtf_sa.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/sa.png"></a>
+</center>
+
+<h2>¿Qué diablos es esto?</h2>
+<p>Esto es en respuesta a los grandes volúmenes de datos que ejecutan la mayoría de las aplicaciones de mensajería (WhatsApp, Hangouts, etc.) o aplicaciones compiladas con transparencia limitada o sin transparencia sobre lo que sucede "debajo del capó". Sin mencionar los posibles motivos políticos de los gobiernos extranjeros (mirándote Telegram).</p>
+<p>Encripte los mensajes cortos usando criptografía fuerte (AES de 256 bits) y haga que funcionen dentro de un mensaje de texto de teléfono móvil (160 caracteres). Guarde en su computadora o teléfono inteligente para usar cuando este sitio web no esté disponible.</p>
+<p>Sin aplicación para instalar Sin servicio para registrarse. Todo almacenado en tu navegador. Nada almacenado o incluso transmitido a través de un servidor. 100% Javascript Todo el código está sin minificar y listo para su revisión <a href="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/2018-04-09-gz.js">aquí</a>.</p>
+
+<h3>¿Por qué hiciste esto?</h3>
+<p>Hay muchas aplicaciones de "mensajes seguros". El problema es que no puede auditar completamente lo que se está ejecutando cuando los usa. Están compilados, y con frecuencia ligeramente alterados (análisis de aplicaciones, etc.) cuando van a la tienda de aplicaciones, a google play o lo que sea.</p>
+<p>covert.chat usa SMS y JavaScript que no está ofuscado y es fácil de auditar y revisar.</p>
+<p>covert.chat no usa la biblioteca jQuery (que es excelente, pero terriblemente doloroso de revisar para mayor seguridad).</p>
+<p>covert.chat no utiliza ningún inicio de sesión de Google, Facebook, Twitter, Instagram, FourSquare, MySpace, etc. o JavaScript analítico que pueda inyectar todo tipo de seguimiento o algo peor.</p>
+
+<h3>Que hace</h3>
+<ol>
+<li>IV = 4 bytes para la hora actual (utilizada para secuenciar líneas de tiempo de chat, no es un problema de seguridad en absoluto) más 12 bytes aleatorios recopilados de tiempos, movimientos del mouse, inclinación del teléfono inteligente / tableta.</li>
+<li>K = SHA256_HMAC(IV, frase de contraseña)</li>
+<li>Convierte cadena de mensaje en una matriz de bytes.</li>
+<li>Encripta el mensaje acolchado M en el texto cifrado C utilizando el cifrado AES de 256 bits en modo CTR: C = AES-256-CTR(K,IV,M)</li>
+<li>Envía un mensaje de texto como # -link (nada enviado al servidor) con el texto cifrado C codificado utilizando Base64</li>
+</ol>
+
+<p>El descifrado es básicamente el reverso, y los usuarios de URL que hacen clic no usan el formato de enlace que envía datos a los servidores. Utiliza el formato # -link que mantiene el texto cifrado encriptado solo en su navegador.</p>
+
+<h3>¿Cómo usarlo?</h3>
+<p>Simplemente puede ir a <a href="https://covert.chat/#l=es">https://covert.chat/#l=es</a> o, si está un poco más paranoico, puede crear un pequeño archivo HTML y confiar en la <a href="https://caniuse.com/#search=Subresource%20Integrity">Subresource Integrity</a> de HTML para cargar la versión específica del código que desea.</p>
+
+<xmp>
+<html>
+ <script src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/2018-04-09-gz.js" integrity="sha256-h40Z2gQ4eHr6kLqiPPZRcj0Jv+OLlsivDuXEI0unFnE=" crossorigin="anonymous"></script>
+</html>
+</xmp>
+
+<h3>Funciones planificadas</h3>
+<ul>
+ <li>Libreta de direcciones (almacenada en JavaScript localStorage) autocompletar</li>
+ <li>El intercambio de claves de Diffie-Hellman una sola vez para elegir una contraseña muy segura (y guardarla en localStorage)</li>
+</ul>
+
+<h3>Referencias</h3>
+<ul>
+<li>SHA-256 (también conocido como SHA-2) <a href="https://en.wikipedia.org/wiki/SHA-2">https://en.wikipedia.org/wiki/SHA-2</a></li>
+<li>HMAC <a href="https://en.wikipedia.org/wiki/HMAC">https://en.wikipedia.org/wiki/HMAC</a></li>
+<li>AES, AES-256: <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">https://en.wikipedia.org/wiki/Advanced_Encryption_Standard</a></li>
+<li>Modo de contador (también conocido como modo de operación CTR): <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)">https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)</a></li>
+<li>Codificación Base64: <a href="https://en.wikipedia.org/wiki/Base64">https://en.wikipedia.org/wiki/Base64</a></li>
+</ul>
+
+&copy; 2018
+<!-- Copyright 2018 Jean-Luc Cooke <jlcooke@certainkey.com> -->
+
+<hr/>
+<span style="font-size:10px;">
+<a href="https://www.eff.org/"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/ads/eff.png" style="max-width:100%; width:300px;"><br/>
+[<a href="mailto:jlcooke@certainkey.com?subject=My%20Advert%20On%20covert.chat">Your advert here?</a>]
+</span>
+
+</body>
+</html>

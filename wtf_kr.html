@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>covert.chat - WTF?</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-9" />
+<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="initial-scale=1.5">
+<style type="text/css">
+body, input, textarea { font-family:sans-serif; }
+</style>
+</head>
+<body>
+
+<center>
+<!-- Our logo does not matter - so we used http://linkus.flamingtext.com/ -->
+<a href="/#l=kr"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/logo.png" style="max-width:100%; width:300px;"></a><br/>
+투명한 암호화 메시징<br/>
+<a href="wtf.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/gb.png"></a>
+<a href="wtf_fr.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/fr.png"></a>
+<a href="wtf_de.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/de.png"></a>
+<a href="wtf_es.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/es.png"></a>
+<a href="wtf_kr.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/kr.png"></a>
+<a href="wtf_cn.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/cn.png"></a>
+<a href="wtf_ru.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/ru.png"></a>
+<a href="wtf_jp.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/jp.png"></a>
+<a href="wtf_sa.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/sa.png"></a>
+</center>
+
+<h2>What the heck is this?</h2>
+<p>이는 메시징 앱 (WhatsApp, Hangouts 등)의 대부분을 실행하는 대용량 데이터 또는 "내부적 인 현상"에 대해 투명성이 제한된 컴파일 된 앱에 대한 대응입니다.</p>
+<p>강력한 암호화 (256 비트 AES)를 사용하여 짧은 메시지를 암호화하고 휴대 전화 문자 메시지 (160 문자) 내에서 작동하게하십시오. 이 웹 사이트를 사용할 수 없을 때 사용할 컴퓨터 또는 스마트 폰에 저장하십시오.</p>
+<p>설치할 앱이 없습니다. 가입 할 서비스가 없습니다. 모든 것이 브라우저에 저장됩니다. 서버를 통해 저장되거나 전송되지 않습니다. 100 % Javascript. 모든 코드는 축소되지 않았으며 여기 에서 검토 할 준비가되었습니다. 너와 너 자신과 자물쇠 <a href="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/2018-04-09-gz.js">이리</a>.</p>
+
+<h3>왜 이걸 만들었 니?</h3>
+<p>모든 종류의 추적 또는 악화를 유발할 수있는 Google, Facebook, Twitter, Instagram, FourSquare, MySpace 등의 로그인 또는 분석 JavaScript는 사용하지 않습니다.</p>
+<p>covert.chat 잘 보이지 않고 감사 및 검토가 쉬운 SMS 및 JavaScript를 사용합니다.</p>
+<p>covert.chat jQuery 라이브러리를 사용하지 않는다. (가장 뛰어나지 만, 보안을 검토하기에는 끔찍한 일이다.)</p>
+<p>covert.chat는 Google, Facebook, Twitter, Instagram, FourSquare, MySpace 등의 로그인이나 모든 종류의 추적 또는 악화를 유발할 수있는 분석 JavaScript를 사용하지 않습니다.</p>
+
+<h3>그것이하는 일</h3>
+<ol>
+<li>IV = 타이밍, 마우스 움직임, 스마트 폰 / 태블릿 기울이기에서 수집 된 16 개의 임의 바이트 </li>
+<li>K = SHA256_HMAC(IV, 암호문)</li>
+<li>메시지 문자열을 바이트 배열로 변환합니다.</li>
+<li>CTR 모드에서 256 비트 AES 암호화를 사용하여 패딩 된 메시지 M을 암호문 C로 암호화합니다.: C = AES-256-CTR(K,IV,M)</li>
+<li>base64를 사용하여 암호문 C로 인코딩 된 텍스트 메시지를 # - 링크 (서버에 전송되지 않음)로 보냅니다.</li>
+</ol>
+
+<p>암호 해독은 기본적으로 반대이며 사용자가 클릭하는 URL은 서버에 데이터를 보내는? 링크 형식을 사용하지 않습니다. # -link 형식을 사용하여 암호화 된 암호문을 브라우저에만 유지합니다.</p>
+
+<h3>사용 방법?</h3>
+<p><a href="https://covert.chat/#l=kr">https://covert.chat/#l=kr</a>로 가거나 작은 편집증 환자라면 작은 HTML 파일을 만들고 HTML의 <a href="https://caniuse.com/#search=Subresource%20Integrity">Subresource Integrity</a>를 사용하여 원하는 특정 코드 버전을로드 할 수 있습니다.</p>
+
+<xmp>
+<html>
+ <script src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/2018-04-09-gz.js" integrity="sha256-h40Z2gQ4eHr6kLqiPPZRcj0Jv+OLlsivDuXEI0unFnE=" crossorigin="anonymous"></script>
+</html>
+</xmp>
+
+<h3>계획된 기능</h3>
+<ul>
+ <li>주소록 (JavaScript localStorage에 저장 됨) 자동 완성</li>
+ <li>일회성 Diffie-Hellman 키 교환으로 매우 강력한 암호를 선택하고 (localStorage에 저장)</li>
+</ul>
+
+<h3>참고 문헌</h3>
+<ul>
+<li>SHA-256 (aka SHA-2) <a href="https://en.wikipedia.org/wiki/SHA-2">https://en.wikipedia.org/wiki/SHA-2</a></li>
+<li>HMAC <a href="https://en.wikipedia.org/wiki/HMAC">https://en.wikipedia.org/wiki/HMAC</a></li>
+<li>AES, AES-256: <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">https://en.wikipedia.org/wiki/Advanced_Encryption_Standard</a></li>
+<li>카운터 모드 (CTR 작동 모드): <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)">https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)</a></li>
+<li>Base64 인코딩: <a href="https://en.wikipedia.org/wiki/Base64">https://en.wikipedia.org/wiki/Base64</a></li>
+</ul>
+
+&copy; 2018
+<!-- Copyright 2018 Jean-Luc Cooke <jlcooke@certainkey.com> -->
+
+<hr/>
+<span style="font-size:10px;">
+<a href="https://www.eff.org/"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/ads/eff.png" style="max-width:100%; width:300px;"><br/>
+[<a href="mailto:jlcooke@certainkey.com?subject=My%20Advert%20On%20covert.chat">Your advert here?</a>]
+</span>
+
+</body>
+</html>

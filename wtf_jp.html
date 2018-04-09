@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>covert.chat - WTF?</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="initial-scale=1.5">
+<style type="text/css">
+body, input, textarea { font-family:sans-serif; }
+</style>
+</head>
+<body>
+
+<center>
+<!-- Our logo does not matter - so we used http://linkus.flamingtext.com/ -->
+<a href="/#l=jp"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/logo.png" style="max-width:100%; width:300px;"></a><br/>
+透過的な暗号化メッセージング<br/>
+<a href="wtf.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/gb.png"></a>
+<a href="wtf_fr.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/fr.png"></a>
+<a href="wtf_de.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/de.png"></a>
+<a href="wtf_es.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/es.png"></a>
+<a href="wtf_kr.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/kr.png"></a>
+<a href="wtf_cn.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/cn.png"></a>
+<a href="wtf_ru.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/ru.png"></a>
+<a href="wtf_jp.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/jp.png"></a>
+<a href="wtf_sa.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/sa.png"></a>
+</center>
+
+<h2>一体何ですか？</h2>
+<p>これは、大部分のメッセージングアプリケーション（WhatsApp、ハングアウトなど）を実行している大量のデータ、または「ボンネットの下で」何が起こっているのかについて透明性がないことが限られているコンパイル済みアプリに対応しています。 外国政府の潜在的な政治動機（テレグラムを見て）はもちろんです。</p>
+<p>強力な暗号（256ビットAES）を使用してショートメッセージを暗号化し、携帯電話のテキストメッセージ（160文字）内で動作させる。 このウェブサイトが利用できないときに使用するコンピュータまたはスマートフォンに保存します。</p>
+<p>インストールするアプリはありません。 サインアップするサービスはありません。 すべてあなたのブラウザに保存されています。 サーバに格納されたり、送信されたりすることはありません。 100％Javascript。 すべてのコードは未検討でレビュー可能 - <a href="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/2018-04-09-gz.js">ここに</a></p>
+
+<h3>なぜあなたはこれを作ったのですか？</h3>
+<p>多くの「安全なメッセージング」アプリがあります。 問題は、実際に実行しているものを完全に監査できないことです。 彼らはコンパイルされ、アプリストアやGoogle Playに移動したりコンパイルされたりすると、アプリの分析などが若干変更されることがあります。</p>
+<p>covert.chatは、見やすく、監査やレビューが容易なSMSとJavaScriptを使用します。</p>
+<p>covert.chatはjQueryライブラリを使用していません（これは最も優れていますが、セキュリティの見直しには恐ろしく苦しいです）。</p>
+<p>covert.chatはあらゆる種類の追跡や悪化を引き起こす可能性のあるGoogle、Facebook、Twitter、Instagram、Foursquare、MySpaceなどのログインや分析JavaScriptを使用していません。</p>
+
+<h3>それは何ですか</h3>
+<ol>
+<li>IV =タイミング（マウスの動き、スマートフォン/タブレットの傾き）から収集された12のランダムなバイトに加えて、現在の時間（チャットタイムラインのシーケンスに使用され、セキュリティ上の問題ではない）には4バイト。</li>
+<li>K = SHA256_HMAC(IV, パスフレーズ)</li>
+<li>メッセージ文字列をバイト配列に変換します。</li>
+<li>CTRモードで256ビットAES暗号化を使用して、パディングされたメッセージMを暗号文Cに暗号化します。: C = AES-256-CTR(K,IV,M)</li>
+<li>base64を使って暗号化されたCで、テキストメッセージを＃-link（サーバに送信されないもの）として送信します。</li>
+</ol>
+
+<p>復号化は基本的に逆です。ユーザーがクリックするURLは、サーバーにデータを送信する？-link形式を使用しません。 ＃-link形式を使用して、暗号化された暗号文をブラウザにのみ保持します。</p>
+
+<h3>How to use it?</h3>
+<p>You can just go to <a href="https://covert.chat/#l=jp">https://covert.chat/#l=jp</a> or if you are a little more paranoid you can create a small HTML file and rely on HTML's <a href="https://caniuse.com/#search=Subresource%20Integrity">Subresource Integrity</a> to load the specific version of the code you want.</p>
+<p><a href="https://covert.chat/">https://covert.chat/</a>に行くこともできますし、もう少し妄想的であれば、小さなHTMLファイルを作成し、HTMLの<a href="https://caniuse.com/#search=Subresource%20Integrity">Subresource Integrity</a>を利用して特定のバージョンのコードを読み込むこともできます。</p>
+</p>
+<xmp>
+<html>
+ <script src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/2018-04-09-gz.js" integrity="sha256-h40Z2gQ4eHr6kLqiPPZRcj0Jv+OLlsivDuXEI0unFnE=" crossorigin="anonymous"></script>
+</html>
+</xmp>
+
+<h3>計画されている機能</h3>
+<ul>
+ <li>アドレス帳（JavaScript localStorageに保存されている）の自動完成</li>
+ <li>One-Time Diffie-Hellman鍵交換を使用して非常に強力なパスワードを選択する（およびlocalStorageに保存する）</li>
+</ul>
+
+<h3>参考文献</h3>
+<ul>
+<li>SHA-256 (aka SHA-2): <a href="https://en.wikipedia.org/wiki/SHA-2">https://en.wikipedia.org/wiki/SHA-2</a></li>
+<li>HMAC: <a href="https://en.wikipedia.org/wiki/HMAC">https://en.wikipedia.org/wiki/HMAC</a></li>
+<li>AES, AES-256: <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">https://en.wikipedia.org/wiki/Advanced_Encryption_Standard</a></li>
+<li>カウンタモード（CTR動作モード）: <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)">https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)</a></li>
+<li>Base64エンコーディング: <a href="https://en.wikipedia.org/wiki/Base64">https://en.wikipedia.org/wiki/Base64</a></li>
+</ul>
+
+&copy; 2018
+<!-- Copyright 2018 Jean-Luc Cooke <jlcooke@certainkey.com> -->
+
+<hr/>
+<span style="font-size:10px;">
+<a href="https://www.eff.org/"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/ads/eff.png" style="max-width:100%; width:300px;"><br/>
+[<a href="mailto:jlcooke@certainkey.com?subject=My%20Advert%20On%20covert.chat">Your advert here?</a>]
+</span>
+
+</body>
+</html>

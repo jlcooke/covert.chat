@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>covert.chat - WTF?</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="initial-scale=1.5">
+<style type="text/css">
+body, input, textarea { font-family:sans-serif; }
+</style>
+</head>
+<body>
+
+<center>
+<!-- Our logo does not matter - so we used http://linkus.flamingtext.com/ -->
+<a href="/"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/logo.png" style="max-width:100%; width:300px;"></a><br/>
+Transparent Encrypted Messaging<br/>
+<a href="wtf.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/gb.png"></a>
+<a href="wtf_fr.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/fr.png"></a>
+<a href="wtf_de.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/de.png"></a>
+<a href="wtf_es.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/es.png"></a>
+<a href="wtf_kr.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/kr.png"></a>
+<a href="wtf_cn.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/cn.png"></a>
+<a href="wtf_ru.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/ru.png"></a>
+<a href="wtf_jp.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/jp.png"></a>
+<a href="wtf_sa.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/sa.png"></a>
+</center>
+
+<h2>What the heck is this?</h2>
+<p>This is in response to big-data running most of the messaging apps (WhatsApp, Hangouts, etc) or compiled apps with limited to no transparency on what's going on "under the hood".  Not to mention potential political motives of foreign governments (looking at you Telegram).</p>
+<p>Encrypt short messages using strong cryptography (256bit AES) and have it work inside a mobile phone text message (160 characters).  Save on your computer or smartphone to use when this website is unavailable.</p>
+<p>No app to install.  No service to sign up to.  Everything stored in your browser.  Nothing stored or even transmitted through a server.  100% Javascript. All code is un-minified and ready for review <a href="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-2018-04-09-gz.js">here</a>.</p>
+
+<h3>Why did you make this?</h3>
+<p>There are lots of "secure messaging" apps out there.  Problem is - you can't fully audit what is actually running when you use them.  They're compiled, and often slightly altered (app analytics, etc) when they go on to the app store or google play or whatever.</p>
+<p>covert.chat uses SMS and JavaScript that is un-obfuscated and easy to audit and review.</p>
+<p>covert.chat doesn't use the jQuery library (which is most excellent, but horrendously painful to review for security).</p>
+<p>covert.chat doesn't use any Google, Facebook, Twitter, Instagram, FourSquare, MySpace, etc logins or analytics JavaScript which may inject all kinds of tracking or worse.</p>
+
+<h3>What it does</h3>
+<ol>
+<li>IV = 4 bytes for the current time (used to sequence chat timelines, not a security issue at all) plus 12 random bytes collected from timings, mouse movements, smartphone/tablet tilting.</li>
+<li>K = SHA256_HMAC(IV, passphrase)</li>
+<li>Converts message string into an array of bytes.</li>
+<li>Encrypts the padded message M into ciphertext C using 256-bit AES encryption in CTR mode: C = AES-256-CTR(K,IV,M)</li>
+<li>Sends text message as a #-link (nothing sent to the server) with the ciphertext C encoded using Base64</li>
+</ol>
+
+<p>Decryption is basically the reverse - and the URL users click on do not use the ?-link format which sends data to servers.  It uses the #-link format which keeps the encrypted ciphertext on your browser only.</p>
+
+<h3>How to use it?</h3>
+<p>You can just go to <a href="https://covert.chat/">https://covert.chat/</a> or if you are a little more paranoid you can create a small HTML file and rely on HTML's <a href="https://caniuse.com/#search=Subresource%20Integrity">Subresource Integrity</a> to load the specific version of the code you want.</p>
+
+<xmp>
+<html>
+ <script src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/2018-2018-04-09-gz.js" integrity="sha256-h40Z2gQ4eHr6kLqiPPZRcj0Jv+OLlsivDuXEI0unFnE=" crossorigin="anonymous"></script>
+</html>
+</xmp>
+
+<h3>Planned Features</h3>
+<ul>
+ <li>Address book (stored in JavaScript localStorage) auto-complete</li>
+ <li>Add translations for French, Spanish, German, Mandarin, Russian, Japanese, and Arabic.</li>
+ <li>One-Time Diffie-Hellman key exchange to choose a very strong password (and save it in localStorage)</li>
+</ul>
+
+<h3>References</h3>
+<ul>
+<li>SHA-256 (aka SHA-2) <a href="https://en.wikipedia.org/wiki/SHA-2">https://en.wikipedia.org/wiki/SHA-2</a></li>
+<li>HMAC <a href="https://en.wikipedia.org/wiki/HMAC">https://en.wikipedia.org/wiki/HMAC</a></li>
+<li>AES, AES-256: <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">https://en.wikipedia.org/wiki/Advanced_Encryption_Standard</a></li>
+<li>Counter Mode (aka. CTR mode of operation): <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)">https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)</a></li>
+<li>Base64 Encoding: <a href="https://en.wikipedia.org/wiki/Base64">https://en.wikipedia.org/wiki/Base64</a></li>
+</ul>
+
+&copy; 2018
+<!-- Copyright 2018 Jean-Luc Cooke <jlcooke@certainkey.com> -->
+
+<hr/>
+<span style="font-size:10px;">
+<a href="https://www.eff.org/"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/ads/eff.png" style="max-width:100%; width:300px;"><br/>
+[<a href="mailto:jlcooke@certainkey.com?subject=My%20Advert%20On%20covert.chat">Your advert here?</a>]
+</span>
+
+</body>
+</html>

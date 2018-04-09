@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>covert.chat - WTF?</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="initial-scale=1.5">
+<style type="text/css">
+body, input, textarea { font-family:sans-serif; }
+</style>
+</head>
+<body>
+
+<center>
+<!-- Our logo does not matter - so we used http://linkus.flamingtext.com/ -->
+<a href="/#l=sa"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/logo.png" style="max-width:100%; width:300px;"></a><br/>
+رسائل مشفرة شفافة<br/>
+<a href="wtf.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/gb.png"></a>
+<a href="wtf_fr.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/fr.png"></a>
+<a href="wtf_de.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/de.png"></a>
+<a href="wtf_es.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/es.png"></a>
+<a href="wtf_kr.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/kr.png"></a>
+<a href="wtf_cn.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/cn.png"></a>
+<a href="wtf_ru.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/ru.png"></a>
+<a href="wtf_jp.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/jp.png"></a>
+<a href="wtf_sa.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/sa.png"></a>
+</center>
+
+<h2>ما هذا؟</h2>
+<p>هذا استجابة للبيانات الضخمة التي تعمل على معظم تطبيقات المراسلة (WhatsApp و Hangouts وغيرها) أو التطبيقات المجمّعة مع محدودية عدم الشفافية حول ما يحدث "تحت غطاء المحرك". ناهيك عن الدوافع السياسية المحتملة للحكومات الأجنبية (ينظر إليك برقية).</p>
+<p>تشفير الرسائل القصيرة باستخدام التشفير القوي (256bit AES) وتشغيله داخل رسالة نصية للهاتف المحمول (160 حرفًا). حفظ على جهاز الكمبيوتر أو الهاتف الذكي لاستخدامه عندما يكون هذا الموقع غير متاح.</p>
+<p><a href="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/2018-04-09-gz.js">ﻪﻧﺍ</a> - لا يوجد تطبيق للتثبيت. لا توجد خدمة للاشتراك بها. كل شيء مخزن في متصفحك. لا شيء مخزن أو حتى تنتقل من خلال الخادم. 100٪ Javascript. كل الشفرة غير مختزلة وجاهزة للمراجعة هنا.</p>
+
+<h3>لماذا صنعت هذا؟</h3>
+<p>هناك العديد من تطبيقات "المراسلة الآمنة". المشكلة هي أنك لا تستطيع تدقيق كامل لما يتم تشغيله بالفعل عند استخدامها. يتم تجميعها ، وغالبًا ما يتم تعديلها قليلاً (تحليلات التطبيق ، وما إلى ذلك) عند الانتقال إلى متجر التطبيقات أو لعب Google أو تجميعها.</p>
+<p>يستخدم Covert.Chat الرسائل القصيرة وجافا سكريبت التي هي غير معقدة وسهلة للتدقيق والمراجعة.</p>
+<p>لا تستخدم covert.chat مكتبة jQuery (وهي الأكثر ممتازة ، ولكنها مؤلمة بشكل رهيب لمراجعة الأمن).</p>
+<p>لا تستخدم Covert.Chat أي Google ، أو Facebook ، أو Twitter ، أو Instagram ، أو FourSquare ، أو MySpace ، أو غيرها من عمليات تسجيل الدخول أو جافا سكريبت analytics التي قد تقوم بحقن كل أنواع التتبع أو ما هو أسوأ.</p>
+
+<h3>ماذا يفعل</h3>
+<ol>
+<li>IV = 4 بايت للوقت الحالي (يُستخدم لتسلسل جداول زمنية للدردشة ، وليس مشكلة أمان على الإطلاق) بالإضافة إلى 12 بايت عشوائي يتم جمعها من التوقيتات وحركات الماوس وإمالة الهاتف الذكي / الجهاز اللوحي.</li>
+<li>K = SHA256_HMAC(IV, عبارة المرور)</li>
+<li>يحول سلسلة الرسالة إلى مصفوفة من البايتات.</li>
+<li>C = AES-256-CTR(K,IV,M) : تشفير الرسالة المبسطة M في النص المشفر C باستخدام تشفير 256-bit AES في وضع CTR</li>
+<li>يرسل رسالة نصية على شكل # ارتباط (لا يتم إرسال أي شيء إلى الخادم) مع تشفير النص المشفر C باستخدام Base64</li>
+</ol>
+
+<p>فك التشفير هو الأساس - ولا يقوم مستخدمو URL بالنقر فوق لا يستخدمون تنسيق الارتباط الذي يرسل البيانات إلى الخوادم. ويستخدم تنسيق # -link الذي يحافظ على النص المشفر على المتصفح الخاص بك فقط.</p>
+
+<h3>كيفية استخدامها؟</h3>
+<p>يمكنك فقط الانتقال إلى <a href="https://covert.chat/#l=sa">https://covert.chat/#l=sa</a> أو إذا كنت أكثر بجنون العظمة يمكنك إنشاء ملف HTML صغير والاعتماد على <a href="https://caniuse.com/#search=Subresource%20Integrity">Subresource Integrity</a> الخاص بـ HTML لتحميل الإصدار المحدد من الشفرة التي تريدها.</p>
+
+<xmp>
+<html>
+ <script src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/2018-04-09-gz.js" integrity="sha256-h40Z2gQ4eHr6kLqiPPZRcj0Jv+OLlsivDuXEI0unFnE=" crossorigin="anonymous"></script>
+</html>
+</xmp>
+
+<h3>الميزات المخطط لها</h3>
+<ul>
+ <li>دفتر العناوين (مخزن في JavaScript localStorage) مملوء آلياً</li>
+ <li>تبادل مفتاح Diffie-Hellman لمرة واحدة لاختيار كلمة مرور قوية جدًا (وحفظها في localStorage)</li>
+</ul>
+
+<h3>المراجع</h3>
+<ul>
+<li>SHA-256 (aka SHA-2) <a href="https://en.wikipedia.org/wiki/SHA-2">https://en.wikipedia.org/wiki/SHA-2</a></li>
+<li>HMAC <a href="https://en.wikipedia.org/wiki/HMAC">https://en.wikipedia.org/wiki/HMAC</a></li>
+<li>AES, AES-256: <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">https://en.wikipedia.org/wiki/Advanced_Encryption_Standard</a></li>
+<li>وضع العداد (وضع CTR للتشغيل): <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)">https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)</a></li>
+<li>Base64 Encoding: <a href="https://en.wikipedia.org/wiki/Base64">https://en.wikipedia.org/wiki/Base64</a></li>
+</ul>
+
+&copy; 2018
+<!-- Copyright 2018 Jean-Luc Cooke <jlcooke@certainkey.com> -->
+
+<hr/>
+<span style="font-size:10px;">
+<a href="https://www.eff.org/"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/ads/eff.png" style="max-width:100%; width:300px;"><br/>
+[<a href="mailto:jlcooke@certainkey.com?subject=My%20Advert%20On%20covert.chat">Your advert here?</a>]
+</span>
+
+</body>
+</html>

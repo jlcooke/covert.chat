@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>covert.chat - WTF?</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="initial-scale=1.5">
+<style type="text/css">
+body, input, textarea { font-family:sans-serif; }
+</style>
+</head>
+<body>
+
+<center>
+<!-- Our logo does not matter - so we used http://linkus.flamingtext.com/ -->
+<a href="/#l=ru"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/logo.png" style="max-width:100%; width:300px;"></a><br/>
+Зашифрованные сообщения без памяти<br/>
+<a href="wtf.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/gb.png"></a>
+<a href="wtf_fr.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/fr.png"></a>
+<a href="wtf_de.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/de.png"></a>
+<a href="wtf_es.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/es.png"></a>
+<a href="wtf_kr.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/kr.png"></a>
+<a href="wtf_cn.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/cn.png"></a>
+<a href="wtf_ru.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/ru.png"></a>
+<a href="wtf_jp.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/jp.png"></a>
+<a href="wtf_sa.html"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/sa.png"></a>
+</center>
+
+<h2>Что это за Фрик?</h2>
+<p>Это в ответ на большие данные, на которых запущены большинство приложений для обмена сообщениями (WhatsApp, Hangouts и т. Д.) Или скомпилированные приложения с ограниченной прозрачностью в том, что происходит «под капотом».</p>
+<p>Шифруйте короткие сообщения, используя сильную криптографию (256 бит AES) и работайте внутри текстового сообщения мобильного телефона (160 символов). Сохраните на своем компьютере или смартфоне, чтобы использовать, когда этот веб-сайт недоступен.</p>
+<p>Нет приложения для установки. Нет услуг для регистрации. Все хранится в вашем браузере. Ничего не сохраняется или даже передается через сервер. 100% Javascript. Весь код не уточнен и готов к рассмотрению здесь . И вы, сами и запираетесь. <a href="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/2018-04-09-gz.js">Вот</a>.</p>
+
+<h3>Почему вы это сделали?</h3>
+<p>Существует множество приложений для безопасного обмена сообщениями. Проблема в том, что вы не можете полностью проверить, что на самом деле работает, когда вы их используете. Они скомпилированы и часто немного изменены (аналитика приложений и т. Д.), Когда они идут в магазин приложений или Google Play или скомпилированы.</p>
+<p>covert.chat использует SMS и JavaScript, которые не запутываются и легко проверяются и проверяются.</p>
+<p>covert.chat не использует библиотеку jQuery (что является самым превосходным, но ужасно болезненным для проверки безопасности).</p>
+<p>covert.chat не использует какие-либо логики Google Analytics, Facebook, Twitter, Instagram, Foursquare, myspace и т. д. JavaScript, который может вводить все виды отслеживания или хуже.</p>
+
+<h3>Что оно делает</h3>
+<ol>
+<li>IV = 16 случайных байтов, собранных из таймингов, движений мыши, наклона смартфона / планшета</li>
+<li>K = SHA256_HMAC(IV, кодовая фраза)</li>
+<li>Преобразуйте строку сообщения в массив байтов.</li>
+<li>Шифровать заполненное сообщение M в шифрованном тексте C, используя 256-битное шифрование AES с использованием режима CTR: C = AES-256-CTR(K,IV,M)</li>
+<li>Отправлять текстовое сообщение в виде # -link с зашифрованным текстом C, закодированным с использованием Base64</li>
+</ol>
+
+<p>Расшифровка в основном обратная - и пользователи URL-адреса, на которые не нажимают, не используют формат? -link, который отправляет данные на серверы. Он использует формат # -link, который хранит зашифрованный зашифрованный текст только в вашем браузере.</p>
+
+<h3>Как это использовать?</h3>
+<p>Вы можете просто перейти на <a href="https://covert.chat/#l=ru">https://covert.chat/#l=ru</a>, или если вы немного параноик, вы можете создать небольшой HTML-файл и полагаться на <a href="https://caniuse.com/#search=Subresource%20Integrity">Subresource Integrity</a> для загрузки кода.</p>
+
+<xmp>
+<html>
+ <script src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/2018-04-09-gz.js" integrity="sha256-h40Z2gQ4eHr6kLqiPPZRcj0Jv+OLlsivDuXEI0unFnE=" crossorigin="anonymous"></script>
+</html>
+</xmp>
+
+<h3>Планируемые функции</h3>
+<ul>
+ <li>Адресная книга (сохраненная в JavaScript localStorage) автоматически завершается</li>
+ <li>Одноразовый обмен ключами Diffie-Hellman для выбора очень надежного пароля (и сохранения его в localStorage)</li>
+</ul>
+
+<h3>Рекомендации</h3>
+<ul>
+<li>SHA-256 (aka SHA-2) <a href="https://en.wikipedia.org/wiki/SHA-2">https://en.wikipedia.org/wiki/SHA-2</a></li>
+<li>HMAC <a href="https://en.wikipedia.org/wiki/HMAC">https://en.wikipedia.org/wiki/HMAC</a></li>
+<li>AES, AES-256: <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">https://en.wikipedia.org/wiki/Advanced_Encryption_Standard</a></li>
+<li>Cipher Block Chaining (также известный как режим CTR): <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)">https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)</a></li>
+<li>Base64 Encoding: <a href="https://en.wikipedia.org/wiki/Base64">https://en.wikipedia.org/wiki/Base64</a></li>
+</ul>
+
+&copy; 2018
+<!-- Copyright 2018 Jean-Luc Cooke <jlcooke@certainkey.com> -->
+
+<hr/>
+<span style="font-size:10px;">
+<a href="https://www.eff.org/"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/ads/eff.png" style="max-width:100%; width:300px;"><br/>
+[<a href="mailto:jlcooke@certainkey.com?subject=My%20Advert%20On%20covert.chat">Your advert here?</a>]
+</span>
+
+</body>
+</html>

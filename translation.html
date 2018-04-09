@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>Covert.Chat - Translation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="initial-scale=1.0">
+<meta property="og:title" content="Covert.Chat - Translation" />
+<meta property="og:image" content="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/og_logo.png" />
+<style type="text/css">
+body, input, textarea { font-family:sans-serif; font-size:14px; }
+</style>
+</head>
+<body>
+<center>
+<!-- Our logo does not matter - so we used http://linkus.flamingtext.com/ -->
+<a href="/"><img alt="Covert.Chat Logo" style="max-width:100%; width:300px;" src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/logo.png"><br/>
+<span style="font-size:14px;">Transparent Encrypted Messaging</span></a><br/>
+</center>
+
+<h2>Translation</h2>
+Send corrections to <a href="mailto:jlcooke@certainkey.com?subject=Translation">me</a>.
+<br/>
+<br/>
+
+<script src="dict.js"></script>
+<script>
+function gel(id) { return document.getElementById(id); }
+
+window.onload = function() {
+for (var lang in dict) {
+	gel('xl8_head').innerHTML += '<td><img width=32 src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/flag/'+ lang.replace(/en/,'gb') +'.png"><br><a href="wtf_'+lang+'.html">wtf_'+lang+'.html</a></td>\n';
+}
+
+for (var i in dict.en) {
+	var html = '';
+	for (var lang in dict) {
+		html += '<td>'+ dict[lang][i] +'</td>\n';
+	}
+	gel('xl8_body').innerHTML += html;
+}
+
+}; // onload
+</script>
+
+<table border=1 cellpadding=2 cellspacing=0>
+	<thead>
+		<tr id="xl8_head"></tr>
+	</thead>
+	<tbody id="xl8_body">
+	</tbody>
+</table>
+
+<br/>
+<hr>
+&copy; 2018 jlcooke | <a href="changelog.html">changelog</a>
+<!-- Copyright 2018 Jean-Luc Cooke <jlcooke@certainkey.com> -->
+
+<hr/>
+<span style="font-size:10px;">
+<a href="https://www.eff.org/"><img src="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/ads/eff.png" ALT="EFF - the Electronic Forntier Foundation" style="max-width:100%; width:300px;"></a><br/>
+[<a href="mailto:jlcooke@certainkey.com?subject=My%20Advert%20On%20covert.chat">Your advert here?</a>]
+</span>
+</body>
+</html>
