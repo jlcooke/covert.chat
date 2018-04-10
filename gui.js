@@ -173,7 +173,7 @@ function encryptMessage(pass) {
 	if (el = gel('sendButtonText-2')) el.innerHTML = el.innerHTML .replace(/: .*/, ': '+phonetxt);
 
 	gel('sendButton').setAttribute('uri',
-			'sms:'+ phone +(isMacOS ?'&' :'?') +'body='+ encodeURIComponent(urlpre) + CT.ivct
+		'sms:'+ phone +(isMacOS ?'&' :'?') +'body='+ encodeURIComponent(urlpre) + CT.ivct
 	);
 
 	var msg = urlpre + CT.ivct;
@@ -318,7 +318,6 @@ function sendMessage() {
 	var phone = gel('phonenum').value,
 		pass = gel('passphrase').value,
 		uri = gel('sendButton').getAttribute('uri');
-
 	if (pass == '')
 		return;
 
@@ -746,7 +745,7 @@ body, input, textarea { font-family:sans-serif; font-size:18px; }
 
 <hr>
 [<a href="javascript:toggleLog()">Show console</a>]
-[<a onclick="return downloadLocal();" href="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/covert_chat_2018-04-09.html">Download</a>]
+[<a onclick="return downloadLocal();" href="https://s3.ca-central-1.amazonaws.com/cdn.covert.chat/covert_chat_2018-04-10.html">Download</a>]
 <br/>
 <xmp id="log" style="font-size:12px; display:none;">## log ##
 </xmp><xmp id="entpool_status" style="font-size:12px; display:none;">## Entropy & Random Number Generator ##
@@ -842,12 +841,18 @@ window.onload = function() {
 	}
 
 	// parse the hashtag query string
-	var qstring = document.location.href.match(/#(.*)/);
-	var ct = null;
-	if (qstring) {
-		qstring = qstring[1].split(/&/);
-		for (var i in qstring) {
-			var nv = qstring[i].split(/=/);
+	var qStr = location.href,
+		ct = null;
+	if (!qStr.match(/^https:/))
+		return location.href = 'https://covert.chat/';
+	qStr = qStr.match(/#(.*)/);
+	if (qStr) {
+		qStr = qStr[1].split(/&/);
+		for (var i in qStr) {
+			var nv = qStr[i].split(/=/);
+			if (nv[0] == 'l') {
+				_T.lang = nv[1];
+			}
 			if (nv[0] == 'c') {
 				if (group=nv[1].match(/(.*?),(.*)/)) {
 					gel('phonenum').value = group[1];
@@ -855,15 +860,15 @@ window.onload = function() {
 				}
 				gel('ciphertext').innerHTML = ct = nv[1];
 			}
-			if (nv[0] == 'dh') {
+			if (nv[0] == 'dh'  || nv[0] == 'dhr') {
 				if (group=nv[1].match(/(.*?),(.*)/)) {
 					gel('phonenum').value = group[1];
 					nv[1] = group[2];
 				}
 				storeDHHandshake(nv[1]);
-			}
-			if (nv[0] == 'l') {
-				_T.lang = nv[1];
+				if (nv[0] == 'dh') {
+					sendDHHandshake(sendMessage, 1);
+				}
 			}
 		}
 	}
@@ -900,10 +905,10 @@ function storeDHHandshake(wrapped) {
 		return generateDHSecret(function(){ storeDHHandshake(wrapped); });
 	}
 
-	var shared = strlib.base64FromBytes( dh.handshake(secret, wrapped) );
+	var shared = gel('passphrase').value = strlib.base64FromBytes( dh.handshake(secret, wrapped) );
 	addressbookStore(gel('phonenum').value, shared);
 }
-function sendDHHandshake() {
+function sendDHHandshake(cb, reply) {
 	var phone = gel('phonenum'),
 		myphone = gel('myphonenum');
 	if (phone.value == '')
@@ -914,12 +919,13 @@ function sendDHHandshake() {
 	hide('sendDHHandshake')
 //localStore('dh_secret_base62','');
 	wrapDHSecret(function(wrapped){
-		var uri = 'https://covert.chat/#dh='+ gel('myphonenum').value +','+ wrapped;
-console.log('uri', uri);
-		gel('sendButton').setAttribute('uri', uri);
+		var uri = 'https://covert.chat/#'+ (reply?'dhr':'dh') +'='+ gel('myphonenum').value +','+ wrapped;
+		gel('sendButton').setAttribute('uri',
+			'sms:'+ phone.value +(isMacOS ?'&' :'?') +'body='+ encodeURIComponent(uri)
+		);
 		gel('ciphertext').innerHTML = uri;
 		gel('ciphertext_len').innerHTML = uri.length;
-//		location.href = 'sms:6132632983&body='+ encodeURIComponent(uri);
+		if (cb) cb();
 	});
 }
 function wrapDHSecret(callback) {
